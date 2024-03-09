@@ -9,3 +9,4 @@ Requirements:  Microsoft Word, Python
 #Cancer Rates in Virginia
 
 The Cancer rates folder contains a Jupyter notebook analysis of Virginia Department of Health information on cancer rates among health districts in Virginia.  It contains visualizations of correlational data pertaining to cancer rates, population, and elevation in Virginia.
+Requirements:  Jupyter
