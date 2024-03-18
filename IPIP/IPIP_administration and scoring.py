@@ -4,7 +4,7 @@ Created on Thu Feb 22 18:40:03 2024
 
 @author: Cross Family
 """
-
+# import packages
 import time
 import pandas as pd
 import re
@@ -16,6 +16,7 @@ from datetime import datetime
 import seaborn as sns
 import matplotlib as mpl
 
+#instantiate variables for age calculations
 ThisDay = datetime.now().day
 ThisMonth = datetime.now().month
 ThisYear = datetime.now().year
@@ -26,6 +27,7 @@ Year = int(input("Enter YEAR of birth: "))
 Month = int(input("Enter Month of birth: "))
 Day = int(input ("Enter Day of birth: "))
 
+# calculate current age of examinee
 A = int(ThisYear - Year)
 B = int(ThisMonth - Month)
 C = int(ThisDay - Day)
@@ -51,6 +53,8 @@ Bsub = str(B)
 Csub = str(C)
 print('Your age is ' + Asub + ' years ' + Bsub + ' months ' + Csub + ' days ')
 print()
+
+# set assessment items in a dictionary by subscale
 assessment = [
     #warmth
     {"question":"I know how to comfort others.", "type":1, "math":"+"},
@@ -166,7 +170,10 @@ assessment = [
     {"question":"I have a good word for everyone.", "type": 16, "math": "-"},
 ]
 numquestions = len(assessment)
+
 helptext = "Describe yourself as you generally are now, not as you wish to be in the future.\nDescribe yourself as you honestly see yourself, in relation to other people you know of the same sex as you are, and roughly your same age.\nIndicate for each statement which answer best fits as a description of you:\n1. Very Inaccurate\n2. Moderately Inaccurate\n3. Neither Accurate Nor Inaccurate\n4. Moderately Accurate\n5. Very Accurate\n\nOnce you have submitted your answer, you will be asked to type 'y' (or 'Y') to confirm it."
+
+# place answer descriptions in a list
 answerdescriptions = [
     "Very Inaccurate",
     "Moderately Inaccurate",
@@ -174,13 +181,19 @@ answerdescriptions = [
     "Moderately Accurate",
     "Very Accurate"
 ]
+
+# instantiate scores in a list
 typeScores = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 questionnum = 0
 print("Welcome to the IPIP 16P Assessment"+str(questionnum)+" Total Questions\n")
 print(helptext)
 print("\n\nType a number 1-5 to represent your answer. Type 'help' to see this information again during the assessment!")
 input("Press ENTER when you are ready to begin...\n")
+
+# Have user enter some data to help save the file uniquely
 Name = input("Please enter your initials:  ")
+
+# print question prompts to the examinee, ask for responses, provide the description of the response and get confirmation of answer, then add numerical answer to total for each category 
 for questiondata in assessment:
     questionnum = questionnum + 1
     validanswer = False # initial state
@@ -217,12 +230,14 @@ num = 0
 x = []
 y = []
 
-
+# print results for each subscale category
 for type in typeinfo:
     print(type + ": " + str(typeScores[num]))
     x.append(type)
     y.append(int(typeScores[num]))
     num = num + 1
+
+# create a dataframe to prepare to print to Microsoft Word doc report
 df = pd.DataFrame()
 
 df['Personality Factors'] = x
@@ -315,7 +330,7 @@ para3.font.name = 'Times New Roman'
 para3.font.size = Pt(11)
 
 moment=time.strftime("__%Y-%b-%d",time.localtime())
-please_work = (Name + moment + '.docx')
-doc.save(please_work) 
-os.startfile(please_work)           
+header_name = (Name + moment + '.docx')
+doc.save(header_name) 
+os.startfile(header_name)           
 k=input("press enter to exit")
